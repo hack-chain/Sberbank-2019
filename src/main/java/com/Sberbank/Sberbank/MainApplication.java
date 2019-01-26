@@ -3,8 +3,6 @@ package com.Sberbank.Sberbank;
 import com.Sberbank.Sberbank.payments.QiwiPayer;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import sun.applet.Main;
-
 
 @SpringBootApplication
 public class MainApplication {

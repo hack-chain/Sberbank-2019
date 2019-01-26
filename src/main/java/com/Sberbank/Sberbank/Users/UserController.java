@@ -28,15 +28,13 @@ public class UserController {
         this.assembler = assembler;
     }
 
-    /* Aggregate root */
-
     @GetMapping("/users")
     Resources<Resource<User>> all() {
 
         List<Resource<User>> users = repository.findAll().stream()
-                .map(employee -> new Resource<>(employee,
-                        linkTo(methodOn(UserController.class).one(employee.getId())).withSelfRel(),
-                        linkTo(methodOn(UserController.class).all()).withRel("employees")))
+                .map(user -> new Resource<>(user,
+                        linkTo(methodOn(UserController.class).one(user.getId())).withSelfRel(),
+                        linkTo(methodOn(UserController.class).all()).withRel("users")))
                 .collect(Collectors.toList());
 
         return new Resources<>(users,
@@ -48,7 +46,6 @@ public class UserController {
         return repository.save(newUser);
     }
 
-    // Single item
     @GetMapping("/users/{id}")
     Resource<User> one(@PathVariable Long id) {
 
@@ -57,6 +54,7 @@ public class UserController {
 
         return assembler.toResource(user);
     }
+
     @PutMapping("/users/{id}")
     User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
 

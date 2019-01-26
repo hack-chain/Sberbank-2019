@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 class UserResourceAssembler implements ResourceAssembler<User, Resource<User>> {
 
     @Override
-    public Resource<User> toResource(User employee) {
+    public Resource<User> toResource(User user) {
 
-        return new Resource<>(employee,
-                linkTo(methodOn(UserController.class).one(employee.getId())).withSelfRel(),
-                linkTo(methodOn(UserController.class).all()).withRel("employees"));
+        return new Resource<>(user,
+                linkTo(methodOn(UserController.class).one(user.getId())).withSelfRel(),
+                linkTo(methodOn(UserController.class).all()).withRel("users"));
     }
 }
