@@ -11,6 +11,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.HashMap;
+
 @Configuration
 @Slf4j
 class LoadDatabase {
@@ -18,8 +20,10 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(UserRepository repository, OrderRepository orderRepository) {
         return args -> {
-            orderRepository.save(new Order("MacBook Pro", Status.COMPLETED));
-            orderRepository.save(new Order("iPhone", Status.IN_PROGRESS));
+            HashMap<Long, Status> tmp = new HashMap<> ();
+            tmp.put(Long.valueOf(3), Status.CANCELLED);
+            orderRepository.save(new Order(1000, tmp));
+            orderRepository.save(new Order(2000, tmp));
 
             orderRepository.findAll().forEach(order -> {
                 log.info("Preloaded " + order);

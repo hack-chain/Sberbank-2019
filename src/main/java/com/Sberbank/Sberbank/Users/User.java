@@ -15,14 +15,14 @@ public class User {
     private String vk;
     private String phoneNumber;
     private String photoUrl;
-    private ArrayList<String> buyList;
+    private ArrayList<Long> buyList;
 
     public User() {
         this.name = "";
         this.vk = "";
         this.phoneNumber = "";
         this.photoUrl = "";
-        this.buyList = new ArrayList<String>();
+        this.buyList = new ArrayList<Long>();
     }
 
     public User(String name, String vk) {

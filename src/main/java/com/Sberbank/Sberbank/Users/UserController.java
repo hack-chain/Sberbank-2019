@@ -1,8 +1,13 @@
 package com.Sberbank.Sberbank.Users;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.Sberbank.Sberbank.Orders.Order;
+import com.Sberbank.Sberbank.Orders.OrderController;
+import com.Sberbank.Sberbank.Orders.OrderRepository;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,13 +24,15 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 @RestController
 public class UserController {
     private final UserRepository repository;
-
+    private final OrderRepository orderRepository;
     private final UserResourceAssembler assembler;
 
     UserController(UserRepository repository,
-                       UserResourceAssembler assembler) {
+                       UserResourceAssembler assembler,
+                   OrderRepository orderRepository) {
         this.repository = repository;
         this.assembler = assembler;
+        this.orderRepository = orderRepository;
     }
 
     @GetMapping("/users")
@@ -53,6 +60,21 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id));
 
         return assembler.toResource(user);
+    }
+
+    @GetMapping("/getOrdes/{id}")
+    Resource<User> getOrders(@PathVariable Long id) {
+
+        User user = repository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        ArrayList<Long> ordersId = user.getBuyList();
+
+        List<Resource<Order>> orders = orderRepository.findAll().stream()
+                .map(assembler::toResource)
+                .collect(Collectors.toList());
+
+        return new Resources<>(orders,
+                linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }
 
     @PutMapping("/users/{id}")

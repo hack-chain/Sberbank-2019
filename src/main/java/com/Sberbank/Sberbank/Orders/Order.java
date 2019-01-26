@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.HashMap;
 
 @Entity
 @Data
@@ -13,18 +14,16 @@ import javax.persistence.Table;
 public class Order {
 
     private @Id @GeneratedValue Long id;
-
-    private String description;
-    private Status status;
+    private Integer cost;
+    private HashMap<Long, Status> map;
 
     public Order() {
-        this.description = "";
-        this.status = Status.COMPLETED;
+        this.cost = 1;
+        this.map = new HashMap<Long, Status> ();
     }
 
-    public Order(String description, Status status) {
-
-        this.description = description;
-        this.status = status;
+    public Order(Integer cost, HashMap<Long, Status> map) {
+        this.cost = cost;
+        this.map = map;
     }
 }
