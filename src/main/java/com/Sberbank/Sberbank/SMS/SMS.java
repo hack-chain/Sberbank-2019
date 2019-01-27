@@ -11,21 +11,20 @@ public class SMS {
     public static final String AUTH_TOKEN =
             "431a06b5fd6e07eb8e38d8b28c3fe1c7";
 
-    public static void main() {
+    public static void main(String SMSText, String userId) {
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
         Message message = Message
-                .creator(new PhoneNumber("+79850937035"), // to
+                .creator(new PhoneNumber("+" + userId), // to
                         new PhoneNumber("+19083245918"), // from
-                        "Для оплаты откройте Яндекс: https://yandex.ru/")
+                        SMSText)
                 .create();
 
         System.out.println(message.getSid());
     }
+
+    public void sendVerification(String userId, String buyId, String hash) {
+        main("Перейдите по ссылке для подтверждения оплаты: host//users/buyAccept/" + userId + "/" + hash, userId);
+        // write hash+userId+buyId to DB
+    }
 }
-
-// SM93d6b5afe54c4f7980ced53c03880a76
-// SMc7152c283d8848b0941ec6253df111c2
-// SMcdf57feaa33e48b1bb4d265cae8925f0 +
-// SMefc6459c0b014a77b1f23fddf21a74d3 +
-

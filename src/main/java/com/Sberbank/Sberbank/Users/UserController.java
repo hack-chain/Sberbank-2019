@@ -22,7 +22,7 @@ public class UserController {
     JdbcTemplate jdbcTemplate;
 
     private User findByPhoneNumber(String number) {
-        return jdbcTemplate.queryForObject("select * from users where PHONE_NUMBER=?", new Object[] {
+        return jdbcTemplate.queryForObject("select * from users where PHONE_NUMBER=?", new Object[]{
                         number
                 },
                 new BeanPropertyRowMapper<User>(User.class));
@@ -50,7 +50,7 @@ public class UserController {
 
     @GetMapping("/users/{id}")
     Resource<User> one(@PathVariable Long id) {
-        User user = repository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+        User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return userResourceAssembler.toResource(user);
     }
 
@@ -63,5 +63,16 @@ public class UserController {
     @PostMapping("/users")
     User newUser(@RequestBody User newUser) {
         return repository.save(newUser);
+    }
+
+    @GetMapping("/users/buyAccept/{number}/{hash}")
+    Resource<User> findByNumber(@PathVariable String number, @PathVariable String hash) {
+        User user = findByPhoneNumber(number);
+        // get hash from DB
+        if (hash.equals("HASH_GOT_FROM_DB")) {
+            return userResourceAssembler.toResource(user);
+        } else {
+            return null; // Что вернуть в случае несовпадения хеша?
+        }
     }
 }
