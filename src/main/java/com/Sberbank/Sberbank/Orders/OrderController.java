@@ -104,7 +104,7 @@ public class OrderController {
         int nUsers = map.size();
         Integer sumInt = newOrder.getCost() / nUsers;
         for (Map.Entry<Long, Status> entry : map.entrySet()) {
-            SMS.main("https://qiwi.com/payment/form/99?extra%5B%27account%27%5D=79850937035&amountInteger=" + sumInt + "&amountFraction=%sum_fraction%&extra%5B%27comment%27%5D=" + Long.toString(newOrder.getId()) + "&currency=643&blocked[0]=account&blocked[1]=sum&blocked[2]=comment", entry.getKey());
+            SMS.main("https://qiwi.com/payment/form/99?extra%5B%27account%27%5D=79850937035&amountInteger=" + sumInt + "&amountFraction=0&extra%5B%27comment%27%5D=" + Long.toString(newOrder.getId()) + "&currency=643&blocked[0]=account&blocked[1]=sum&blocked[2]=comment", entry.getKey());
             ArrayList<Long> payers = new ArrayList<Long>(newOrder.getMap().keySet());
             ArrayList<Long> usedPayers = new ArrayList<Long>();
             while (true) {
