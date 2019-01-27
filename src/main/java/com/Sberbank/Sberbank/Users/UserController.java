@@ -34,6 +34,7 @@ public class UserController {
         this.userResourceAssembler = assembler;
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/users")
     Resources<Resource<User>> all() {
         List<Resource<User>> users = repository.findAll().stream()
@@ -46,18 +47,21 @@ public class UserController {
                 linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/users/{id}")
     Resource<User> one(@PathVariable Long id) {
         User user = repository.findById(id).orElseThrow(() -> new UserNotFoundException(id));
         return userResourceAssembler.toResource(user);
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/users/phone/{number}")
     Resource<User> findByNumber(@PathVariable String number) {
         User user = findByPhoneNumber(number);
         return userResourceAssembler.toResource(user);
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/users")
     User newUser(@RequestBody User newUser) {
         return repository.save(newUser);
