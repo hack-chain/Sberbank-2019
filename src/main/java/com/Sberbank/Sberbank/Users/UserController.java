@@ -21,7 +21,7 @@ public class UserController {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    User findByPhoneNumber(String number) {
+    private User findByPhoneNumber(String number) {
         return jdbcTemplate.queryForObject("select * from users where PHONE_NUMBER=?", new Object[] {
                         number
                 },
@@ -31,9 +31,7 @@ public class UserController {
     private final UserRepository repository;
     private final UserResourceAssembler userResourceAssembler;
 
-    UserController(UserRepository repository,
-                       UserResourceAssembler assembler,
-                   OrderRepository orderRepository) {
+    UserController(UserRepository repository, UserResourceAssembler assembler) {
         this.repository = repository;
         this.userResourceAssembler = assembler;
     }
@@ -42,7 +40,7 @@ public class UserController {
     Resources<Resource<User>> all() {
         List<Resource<User>> users = repository.findAll().stream()
                 .map(user -> new Resource<>(user,
-                        linkTo(methodOn(UserController.class).one(user.getPhoneNumber())).withSelfRel(),
+                        linkTo(methodOn(UserController.class).one(user.getId())).withSelfRel(),
                         linkTo(methodOn(UserController.class).all()).withRel("users")))
                 .collect(Collectors.toList());
 
@@ -50,18 +48,26 @@ public class UserController {
                 linkTo(methodOn(UserController.class).all()).withSelfRel());
     }
 
+    @GetMapping("/users/{id}")
+    Resource<User> one(@PathVariable Long id) {
+        User user = repository.findById(id).orElseThrow(()-> new UserNotFoundException(id));
+        return userResourceAssembler.toResource(user);
+    }
+
+    @GetMapping("/users/phone/{number}")
+    Resource<User> findByNumber(@PathVariable String number) {
+        User user = findByPhoneNumber(number);
+        return userResourceAssembler.toResource(user);
+    }
+
     @PostMapping("/users")
     User newUser(@RequestBody User newUser) {
         return repository.save(newUser);
     }
+}
 
-    @GetMapping("/users/{id}")
-    Resource<User> one(@PathVariable String id) {
-        User user = findByPhoneNumber(id);
-        return userResourceAssembler.toResource(user);
-    }
 
-    @PutMapping("/users/{id}")
+    /*@PutMapping("/users/{id}")
     User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
 
         return repository.findById(id)
@@ -78,5 +84,4 @@ public class UserController {
     @DeleteMapping("/users/{id}")
     void deleteUser(@PathVariable Long id) {
         repository.deleteById(id);
-    }
-}
+    }*/
