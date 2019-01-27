@@ -1,5 +1,6 @@
 package com.Sberbank.Sberbank.Orders;
 
+import com.Sberbank.Sberbank.SMS.SMS;
 import com.Sberbank.Sberbank.Users.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -85,6 +88,13 @@ public class OrderController {
     ResponseEntity<Resource<Order>> newOrder(@RequestBody Order order) {
 
         Order newOrder = orderRepository.save(order);
+
+        HashMap<Long, Status> map = newOrder.getMap();
+        int nUsers = map.size();
+        Integer sumInt = newOrder.getCost() / nUsers;
+        for (Map.Entry<Long, Status> entry: map.entrySet()){
+            SMS.main("https://qiwi.com/payment/form/99?extra%5B%27account%27%5D=79850937035&amountInteger="+ sumInt + "&amountFraction=%sum_fraction%&extra%5B%27comment%27%5D="+ Long.toString(newOrder.getId()) +"&currency=643&blocked[0]=account&blocked[1]=sum&blocked[2]=comment", Long.toString(entry.getKey()));
+        }
 
         return ResponseEntity
                 .created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri())

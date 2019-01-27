@@ -12,15 +12,19 @@ public class SMS {
             "431a06b5fd6e07eb8e38d8b28c3fe1c7";
 
     public static void main(String SMSText, String userId) {
-        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+        try {
+            Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
-        Message message = Message
-                .creator(new PhoneNumber("+" + userId), // to
-                        new PhoneNumber("+19083245918"), // from
-                        SMSText)
-                .create();
+            Message message = Message
+                    .creator(new PhoneNumber("+" + userId), // to
+                            new PhoneNumber("+19083245918"), // from
+                            SMSText)
+                    .create();
 
-        System.out.println(message.getSid());
+            System.out.println(message.getSid());
+        } catch (Exception e) {
+
+        }
     }
 
     public void sendVerification(String userId, String buyId, String hash) {

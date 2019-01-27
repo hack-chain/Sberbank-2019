@@ -34,6 +34,7 @@ public class MainApplication {
         ArrayList<String> usedPayers = new ArrayList<String>();
         int temp = 0;
         while (true) {
+            // Из БД выбираются неоплаченные пары должник-покупка, и по ним итерируемся. Сумма берется оттуда же
             for (String userId : payers) {
                 if (usedPayers.contains(userId)) {
                     continue;
