@@ -41,7 +41,7 @@ export default {
   }),
 
   created() {
-    fetch("http://178.128.201.98:8080/users/" + this.personalData.id)
+    fetch("http://178.128.201.98:8080/users/number" + this.personalData.id)
       .then(response => {
         return response.json();
       })
