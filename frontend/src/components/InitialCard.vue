@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-card :class="{'mt-3': true, 'border-primary': personalData.status == 'ok'}">
+    <b-card :class="{'mt-3': true, 'border-primary': personalData.isOwner}">
       <div class="d-flex">
         <div class="avatarBox mr-4">
           <img class="avatarImage" v-if="avatar" :src="avatar">
@@ -8,9 +8,6 @@
         <div class="align-self-center">
           {{ name ? name : personalData.phoneNumber }}
           <br>
-          <b-badge v-if="personalData.status == 'ok'" variant="primary">Готов</b-badge>
-          <b-badge v-if="personalData.status == 'rejected'" variant="danger">Отказался</b-badge>
-          <b-badge v-if="personalData.status == 'waiting'" variant="secondary">Ожидаем ответа</b-badge>
         </div>
       </div>
     </b-card>

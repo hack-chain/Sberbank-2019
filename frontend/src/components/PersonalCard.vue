@@ -6,7 +6,7 @@
           <img class="avatarImage" v-if="avatar" :src="avatar">
         </div>
         <div class="align-self-center">
-          {{ name ? name : personalData.phoneNumber }}
+          {{ name ? name : phoneNumber }}
           <br>
           <b-badge v-if="personalData.paid" variant="success">Оплатил</b-badge>
         </div>
@@ -36,7 +36,8 @@ export default {
 
   data: () => ({
     avatar: null,
-    name: null
+    name: null,
+    phoneNumber: null
   }),
 
   created() {
