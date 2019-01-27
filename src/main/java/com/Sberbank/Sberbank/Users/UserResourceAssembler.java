@@ -13,7 +13,7 @@ class UserResourceAssembler implements ResourceAssembler<User, Resource<User>> {
     public Resource<User> toResource(User user) {
 
         return new Resource<>(user,
-                linkTo(methodOn(UserController.class).one(user.getId())).withSelfRel(),
+                linkTo(methodOn(UserController.class).one(user.getPhoneNumber())).withSelfRel(),
                 linkTo(methodOn(UserController.class).all()).withRel("users"));
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @Configuration
@@ -28,8 +29,10 @@ class LoadDatabase {
             orderRepository.findAll().forEach(order -> {
                 log.info("Preloaded " + order);
             });
-            log.info("Preloading " + repository.save(new User("Bilbo Baggins", "burglar")));
-            log.info("Preloading " + repository.save(new User("Frodo Baggins", "thief")));
+            ArrayList<Long> tmp1 = new ArrayList<Long>();
+            tmp1.add(Long.valueOf(1));
+            log.info("Preloading " + repository.save (new User("Dmitry", "+79154336070", "https")));
+            log.info("Preloading " + repository.save(new User("Frodo Baggins", "88003543333","http",tmp1)));
         };
     }
 }
