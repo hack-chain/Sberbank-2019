@@ -23,7 +23,7 @@ public class QiwiPayer {
         return form_params;
     }
 
-    public static boolean checkPayment(String sum_int, String sum_fraction, String payee, String payer, String buy_id, String token) {
+    public static boolean checkPayment(Integer sum_int, String sum_fraction, String payee, Long payer, Long buy_id, String token) {
 
         try {
             String url = "https://edge.qiwi.com/payment-history/v2/persons/" + payee + "/payments?rows=1";

@@ -30,29 +30,7 @@ public class MainApplication {
 //		new ScheduledThreadPoolExecutor(1, 1, 1000).invoke(new Forker("-1", payers, true));
 //		payers.add("1");
 //		payers.add("2");
-        ArrayList<String> payers = new ArrayList<String>();
-        ArrayList<String> usedPayers = new ArrayList<String>();
-        int temp = 0;
-        while (true) {
-            for (String userId : payers) {
-                if (usedPayers.contains(userId)) {
-                    continue;
-                }
-                System.out.println(userId);
-                if (QiwiPayer.checkPayment("1.5", "0", "79850937035", userId, "test123 146", "1c9111a7bf73364806348fa580ddae8c")) {
-                    usedPayers.add(userId);
-                    // and change DB
-                }
-            }
-            if (temp == 1) {
-                payers.add("1000");
-            }
-            if (temp == 2) {
-                payers.add("79850937035");
-            }
-            temp++;
-            TimeUnit.SECONDS.sleep(2);
-        }
+
     }
 
 }

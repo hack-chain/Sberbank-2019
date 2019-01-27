@@ -65,8 +65,8 @@ public class UserController {
         return repository.save(newUser);
     }
 
-    @GetMapping("/users/buyAccept/{number}/{hash}")
-    Resource<User> findByNumber(@PathVariable String number, @PathVariable String hash) {
+    @GetMapping("/users/buyAccept/{buyId}/{userId}/{hash}")
+    Resource<User> findToAccept(@PathVariable Long buyId, @PathVariable String number, @PathVariable String hash) {
         User user = findByPhoneNumber(number);
         // get hash from DB
         if (hash.equals("HASH_GOT_FROM_DB")) {

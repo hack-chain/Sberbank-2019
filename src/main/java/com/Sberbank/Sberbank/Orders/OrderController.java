@@ -1,12 +1,9 @@
 package com.Sberbank.Sberbank.Orders;
 
-import com.Sberbank.Sberbank.Users.User;
+import com.Sberbank.Sberbank.Payments.QiwiPayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
-import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.Resources;
-import org.springframework.hateoas.VndErrors;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,7 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
@@ -81,6 +81,13 @@ public class OrderController {
                 linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }
 
+    private Order findById(Long id) {
+        return jdbcTemplate.queryForObject("select * from orders where id=?", new Object[]{
+                        id
+                },
+                new BeanPropertyRowMapper<Order>(Order.class));
+    }
+
     @PostMapping("/orders")
     ResponseEntity<Resource<Order>> newOrder(@RequestBody Order order) {
 
@@ -91,26 +98,3 @@ public class OrderController {
                 .body(assembler.toResource(newOrder));
     }
 }
-
-
-    /*@DeleteMapping("/orders/{id}/cancel")
-    ResponseEntity<ResourceSupport> cancel(@PathVariable Long id) {
-
-        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
-
-
-        return ResponseEntity
-                .status(HttpStatus.METHOD_NOT_ALLOWED)
-                .body(new VndErrors.VndError("Method not allowed", "You can't cancel an order that is in the " + " status"));
-    }
-
-    @PutMapping("/orders/{id}/complete")
-    ResponseEntity<ResourceSupport> complete(@PathVariable Long id) {
-
-        Order order = orderRepository.findById(id).orElseThrow(() -> new OrderNotFoundException(id));
-
-
-        return ResponseEntity
-                .status(HttpStatus.METHOD_NOT_ALLOWED)
-                .body(new VndErrors.VndError("Method not allowed", "You can't complete an order that is in the " + " status"));
-    }*/

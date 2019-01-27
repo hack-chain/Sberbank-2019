@@ -1,10 +1,10 @@
 package com.Sberbank.Sberbank.Orders;
 
 import lombok.Data;
+import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
 import java.util.HashMap;
-
 
 
 @Entity
@@ -17,16 +17,16 @@ public class Order {
     private String description;
     private Integer cost;
     @Column(length = 100000)
-    private HashMap<Long, Status> map;
+    private HashMap<Long, HashMap<String, Status>> map;
 
     public Order() {
         this.author = Long.valueOf(1);
         this.description = "";
         this.cost = 0;
-        this.map = new HashMap<Long, Status> ();
+        this.map = new HashMap<Long, HashMap<String, Status>> ();
     }
 
-    public Order(Long author, String description, Integer cost, HashMap<Long, Status> map) {
+    public Order(Long author, String description, Integer cost, HashMap<Long, HashMap<String, Status>> map) {
         this.author = author;
         this.description = description;
         this.cost = cost;
