@@ -33,6 +33,7 @@ public class OrderController {
         public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
             Order order = new Order();
             order.setId(rs.getLong("id"));
+            order.setDescription(rs.getString("description"));
             order.setAuthor(rs.getLong("author"));
             order.setCost(rs.getInt("cost"));
             return order;
