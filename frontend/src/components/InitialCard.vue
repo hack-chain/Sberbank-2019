@@ -29,7 +29,10 @@ export default {
 
   created() {
     var vm = this;
-    fetch("http://localhost:8080/users/phone/" + vm.personalData.phoneNumber)
+    fetch(
+      "http://javathon.kolebor.ru:8080/users/phone/" +
+        vm.personalData.phoneNumber
+    )
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -43,7 +46,7 @@ export default {
       .catch(error => {
         var headers = new Headers();
         headers.append("Content-type", "application/json");
-        fetch("http://localhost:8080/users", {
+        fetch("http://javathon.kolebor.ru:8080/users", {
           method: "POST",
           headers: headers,
           body: JSON.stringify({
@@ -53,7 +56,8 @@ export default {
           })
         }).then(response =>
           fetch(
-            "http://localhost:8080/users/phone/" + vm.personalData.phoneNumber
+            "http://javathon.kolebor.ru:8080/users/phone/" +
+              vm.personalData.phoneNumber
           )
             .then(result => {
               return response.json();

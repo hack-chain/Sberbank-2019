@@ -41,7 +41,7 @@ export default {
   }),
 
   created() {
-    fetch("http://localhost:8080/users/" + this.personalData.id)
+    fetch("http://javathon.kolebor.ru:8080/users/" + this.personalData.id)
       .then(response => {
         return response.json();
       })

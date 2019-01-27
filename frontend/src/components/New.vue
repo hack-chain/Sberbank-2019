@@ -80,7 +80,7 @@ export default {
       }
 
       var urls = this.people.map(
-        p => "http://localhost:8080/users/phone/" + p.phoneNumber
+        p => "http://javathon.kolebor.ru:8080/users/phone/" + p.phoneNumber
       );
       console.log(urls);
 
@@ -93,7 +93,7 @@ export default {
           var headers = new Headers();
           console.log(JSON.stringify(paymentData));
           headers.append("Content-type", "application/json");
-          fetch("http://localhost:8080/orders/", {
+          fetch("http://javathon.kolebor.ru:8080/orders/", {
             method: "POST",
             headers: headers,
             body: JSON.stringify(paymentData)

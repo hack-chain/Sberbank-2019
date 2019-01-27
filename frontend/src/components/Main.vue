@@ -21,7 +21,7 @@ export default {
       window.location.href = "/number";
     }
 
-    fetch("http://localhost:8080/orders/author/" + id)
+    fetch("http://javathon.kolebor.ru:8080/orders/author/" + id)
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -30,7 +30,7 @@ export default {
       .then(data => {
         var paymentList = data._embedded.orderList;
         for (let p of paymentList) {
-          fetch("http://localhost:8080/orders/" + p.id)
+          fetch("http://javathon.kolebor.ru:8080/orders/" + p.id)
             .then(response => {
               if (response.ok) {
                 return response.json();
