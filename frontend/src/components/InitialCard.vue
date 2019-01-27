@@ -30,7 +30,7 @@ export default {
   created() {
     var vm = this;
     fetch(
-      "http://178.128.201.98/:8080/users/phone/" + vm.personalData.phoneNumber
+      "http://178.128.201.98:8080/users/phone/" + vm.personalData.phoneNumber
     )
       .then(response => {
         if (response.ok) {
@@ -45,7 +45,7 @@ export default {
       .catch(error => {
         var headers = new Headers();
         headers.append("Content-type", "application/json");
-        fetch("http://178.128.201.98/:8080/users", {
+        fetch("http://178.128.201.98:8080/users", {
           method: "POST",
           headers: headers,
           body: JSON.stringify({
@@ -55,7 +55,7 @@ export default {
           })
         }).then(response =>
           fetch(
-            "http://178.128.201.98/:8080/users/phone/" +
+            "http://178.128.201.98:8080/users/phone/" +
               vm.personalData.phoneNumber
           )
             .then(result => {

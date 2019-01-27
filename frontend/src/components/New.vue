@@ -80,7 +80,7 @@ export default {
       }
 
       var urls = this.people.map(
-        p => "http://178.128.201.98/:8080/users/phone/" + p.phoneNumber
+        p => "http://178.128.201.98:8080/users/phone/" + p.phoneNumber
       );
       console.log(urls);
 
@@ -93,7 +93,7 @@ export default {
           var headers = new Headers();
           console.log(JSON.stringify(paymentData));
           headers.append("Content-type", "application/json");
-          fetch("http://178.128.201.98/:8080/orders/", {
+          fetch("http://178.128.201.98:8080/orders/", {
             method: "POST",
             headers: headers,
             body: JSON.stringify(paymentData)
