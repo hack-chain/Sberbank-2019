@@ -88,7 +88,7 @@ export default {
         jsons => {
           console.log(jsons);
           for (var j of jsons) {
-            paymentData.map[String(j.id)] = "2";
+            paymentData.map[String(j.phoneNumber)] = "2";
           }
           var headers = new Headers();
           console.log(JSON.stringify(paymentData));
