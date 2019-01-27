@@ -6,7 +6,7 @@
           <img class="avatarImage" v-if="avatar" :src="avatar">
         </div>
         <div class="align-self-center">
-          {{ name ? name : phoneNumber }}
+          {{ name ? name : personalData.id }}
           <br>
           <b-badge v-if="personalData.paid" variant="success">Оплатил</b-badge>
         </div>
@@ -41,7 +41,7 @@ export default {
   }),
 
   created() {
-    fetch("http://178.128.201.98:8080/users/number" + this.personalData.id)
+    fetch("http://178.128.201.98:8080/users/" + this.personalData.id)
       .then(response => {
         return response.json();
       })
