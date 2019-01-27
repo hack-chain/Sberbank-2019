@@ -22,7 +22,7 @@ class LoadDatabase {
     CommandLineRunner initDatabase(UserRepository repository, OrderRepository orderRepository) {
         return args -> {
             HashMap<Long, Status> tmp = new HashMap<> ();
-            tmp.put(Long.valueOf(4), Status.REJECTED);
+            tmp.put(Long.valueOf(4), Status.NOT_PAID);
             orderRepository.save(new Order(Long.valueOf(3), 1000, tmp));
             orderRepository.save(new Order(Long.valueOf(3), 1000, tmp));
 
