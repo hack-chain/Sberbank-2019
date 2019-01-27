@@ -3,8 +3,8 @@ package com.Sberbank.Sberbank.Payments;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.RecursiveAction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +23,7 @@ public class QiwiPayer {
         return form_params;
     }
 
-    public boolean checkPayment(String sum_int, String sum_fraction, String payee, String payer, String buy_id, String token) {
+    public static boolean checkPayment(String sum_int, String sum_fraction, String payee, String payer, String buy_id, String token) {
 
         try {
             String url = "https://edge.qiwi.com/payment-history/v2/persons/" + payee + "/payments?rows=1";
@@ -76,3 +76,5 @@ public class QiwiPayer {
         return m.matches();
     }
 }
+
+
