@@ -65,23 +65,3 @@ public class UserController {
         return repository.save(newUser);
     }
 }
-
-
-    /*@PutMapping("/users/{id}")
-    User replaceUser(@RequestBody User newUser, @PathVariable Long id) {
-
-        return repository.findById(id)
-                .map(User -> {
-                    User.setName(newUser.getName());
-                    return repository.save(User);
-                })
-                .orElseGet(() -> {
-                    newUser.setId(id);
-                    return repository.save(newUser);
-                });
-    }
-
-    @DeleteMapping("/users/{id}")
-    void deleteUser(@PathVariable Long id) {
-        repository.deleteById(id);
-    }*/

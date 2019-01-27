@@ -10,19 +10,22 @@ import java.util.HashMap;
 
 @Entity
 @Data
-@Table(name = "CUSTOMER_ORDER")
+@Table(name = "orders")
 public class Order {
 
     private @Id @GeneratedValue Long id;
+    private Long author;
     private Integer cost;
     private HashMap<Long, Status> map;
 
     public Order() {
-        this.cost = 1;
+        this.author = Long.valueOf(1);
+        this.cost = 0;
         this.map = new HashMap<Long, Status> ();
     }
 
-    public Order(Integer cost, HashMap<Long, Status> map) {
+    public Order(Long author, Integer cost, HashMap<Long, Status> map) {
+        this.author = author;
         this.cost = cost;
         this.map = map;
     }
