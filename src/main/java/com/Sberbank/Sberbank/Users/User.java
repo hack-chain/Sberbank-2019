@@ -5,10 +5,12 @@ import lombok.Data;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 
 @Data
 @Entity
+@Table(name = "USERS")
 public class User {
     private @Id @GeneratedValue Long id;
     private String name;
@@ -19,15 +21,22 @@ public class User {
 
     public User() {
         this.name = "";
-        this.vk = "";
         this.phoneNumber = "";
         this.photoUrl = "";
         this.buyList = new ArrayList<Long>();
     }
 
-    public User(String name, String vk) {
+    public User(String name, String phoneNumber, String photoUrl) {
         this.name = name;
-        this.vk = vk;
+        this.phoneNumber = phoneNumber;
+        this.photoUrl = photoUrl;
+    }
+
+    public User(String name, String phoneNumber, String photoUrl, ArrayList<Long> buyList) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.photoUrl = photoUrl;
+        this.buyList = buyList;
     }
 }
 
