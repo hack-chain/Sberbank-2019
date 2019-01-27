@@ -38,7 +38,7 @@ export default {
             })
             .then(data => {
               var payment = {};
-              payment.name = "Name name";
+              payment.name = data.description;
               payment.cost = data.cost;
               payment.people = [];
               for (p in data.map) {
