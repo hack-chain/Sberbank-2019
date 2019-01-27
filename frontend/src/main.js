@@ -5,12 +5,14 @@ import Auth from "./components/Auth.vue";
 import Main from "./components/Main.vue";
 import New from "./components/New.vue";
 import AskForNumber from "./components/AskForNumber.vue";
+import AfterAuth from "./components/AfterAuth.vue";
 
 const routes = {
   "/": Main,
   "/auth": Auth,
   "/new": New,
-  "/number": AskForNumber
+  "/number": AskForNumber,
+  "/after_auth": AfterAuth
 };
 
 Vue.config.productionTip = false;
