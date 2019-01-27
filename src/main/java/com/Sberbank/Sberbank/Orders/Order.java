@@ -1,26 +1,24 @@
 package com.Sberbank.Sberbank.Orders;
 
 import lombok.Data;
-import org.springframework.data.util.Pair;
 
 import javax.persistence.*;
 import java.util.HashMap;
-
 
 @Entity
 @Data
 @Table(name = "orders")
 public class Order {
-
     private @Id @GeneratedValue Long id;
     private Long author;
     private String description;
     private Integer cost;
+
     @Column(length = 100000)
     private HashMap<Long, Status> map;
 
     public Order() {
-        this.author = Long.valueOf(1);
+        this.author = Long.valueOf(0);
         this.description = "";
         this.cost = 0;
         this.map = new HashMap<Long, Status> ();

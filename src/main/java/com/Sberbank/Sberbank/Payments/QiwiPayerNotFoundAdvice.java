@@ -11,7 +11,7 @@ public class QiwiPayerNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(QiwiPayerNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String employeeNotFoundHandler(QiwiPayerNotFoundException ex) {
+    String qiwiPayerNotFoundHandler(QiwiPayerNotFoundException ex) {
         return ex.getMessage();
     }
 }

@@ -1,10 +1,8 @@
 package com.Sberbank.Sberbank.Users;
 
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.Sberbank.Sberbank.Orders.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -68,11 +66,10 @@ public class UserController {
     @GetMapping("/users/buyAccept/{buyId}/{userId}/{hash}")
     Resource<User> findToAccept(@PathVariable Long buyId, @PathVariable String number, @PathVariable String hash) {
         User user = findByPhoneNumber(number);
-        // get hash from DB
         if (hash.equals("HASH_GOT_FROM_DB")) {
             return userResourceAssembler.toResource(user);
         } else {
-            return null; // Что вернуть в случае несовпадения хеша?
+            return null;
         }
     }
 }

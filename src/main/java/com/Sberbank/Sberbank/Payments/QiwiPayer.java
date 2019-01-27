@@ -31,10 +31,8 @@ public class QiwiPayer {
             URL obj = new URL(url);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-            // optional default is GET
             con.setRequestMethod("GET");
 
-            //add request header
             con.setRequestProperty("Accept", "application/json");
             con.setRequestProperty("Content-Type", "application/json");
             con.setRequestProperty("Authorization", "Bearer " + token);
@@ -53,16 +51,11 @@ public class QiwiPayer {
             }
             in.close();
 
-            //print result
             System.out.println(response.toString());
             return checkWithRegExp(response.toString(), "^.*\"status\":\"SUCCESS\".*$") &&
                     checkWithRegExp(response.toString(), "^.*\"sum\":.\"amount\":" + sum_int + ",\"currency\":643..*$") &&
                     checkWithRegExp(response.toString(), "^.*\"personId\":" + payer + ".*$") &&
                     checkWithRegExp(response.toString(), "^.*\"comment\":\"" + buy_id + "\".*$");
-//            System.out.println(checkWithRegExp(response.toString(), "^.*\"status\":\"SUCCESS\".*$"));
-//            System.out.println(checkWithRegExp(response.toString(), "^.*\"sum\":.\"amount\":" + sum_int + ",\"currency\":643..*$"));
-//            System.out.println(checkWithRegExp(response.toString(), "^.*\"personId\":" + payer + ".*$"));
-//            System.out.println(checkWithRegExp(response.toString(), "^.*\"comment\":\"" + buy_id + "\".*$"));
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("null :(");
@@ -71,9 +64,7 @@ public class QiwiPayer {
     }
 
     public static boolean checkWithRegExp(String userNameString, String template) {
-        Pattern p = Pattern.compile(template);
-        Matcher m = p.matcher(userNameString);
-        return m.matches();
+        return Pattern.compile(template).matcher(userNameString).matches();
     }
 }
 

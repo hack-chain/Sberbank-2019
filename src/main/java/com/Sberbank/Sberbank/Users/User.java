@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 @Data
 @Entity
-@Table(name = "USERS")
+@Table(name = "users")
 public class User {
     private @Id @GeneratedValue Long id;
     private String name;

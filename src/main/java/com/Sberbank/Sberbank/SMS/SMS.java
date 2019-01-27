@@ -2,22 +2,17 @@ package com.Sberbank.Sberbank.SMS;
 
 import com.Sberbank.Sberbank.Orders.Order;
 import com.Sberbank.Sberbank.Orders.Status;
-import com.Sberbank.Sberbank.Users.User;
 import com.twilio.Twilio;
 import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.util.Pair;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-
-import java.util.HashMap;
 
 public class SMS {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    // Find your Account Sid and Auth Token at twilio.com/console
     public static final String ACCOUNT_SID =
             "ACffe5c82b121bf1b625c9d071fdb8ef3b";
     public static final String AUTH_TOKEN =
@@ -28,14 +23,14 @@ public class SMS {
             Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
             Message message = Message
-                    .creator(new PhoneNumber("+" + userId), // to
-                            new PhoneNumber("+19083245918"), // from
+                    .creator(new PhoneNumber("+" + userId),
+                            new PhoneNumber("+19083245918"),
                             SMSText)
                     .create();
 
             System.out.println(message.getSid());
         } catch (Exception e) {
-
+            System.out.println(e.toString());
         }
     }
 

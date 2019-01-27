@@ -1,7 +1,6 @@
 package com.Sberbank.Sberbank.Orders;
 
 import com.Sberbank.Sberbank.SMS.SMS;
-import com.Sberbank.Sberbank.Users.User;
 import com.Sberbank.Sberbank.Payments.QiwiPayer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Resource;
@@ -18,8 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -103,10 +100,9 @@ public class OrderController {
         int nUsers = map.size();
         Integer sumInt = newOrder.getCost() / nUsers;
         for (Map.Entry<Long, Status> entry : map.entrySet()) {
-            SMS.main("https://qiwi.com/payment/form/99?extra%5B%27account%27%5D=79850937035&amountInteger=" + sumInt + "&amountFraction=%sum_fraction%&extra%5B%27comment%27%5D=" + Long.toString(newOrder.getId()) + "&currency=643&blocked[0]=account&blocked[1]=sum&blocked[2]=comment", Long.toString(entry.getKey()));
+            SMS.main("https://qiwi.com/payment/form/99?extra%5B%27account%27%5D=79850937035&amountInteger=" + sumInt + "&amountFraction=%sum_fraction%&extra%5B%27comment%27%5D=" + Long.toString(newOrder.getId()) + "&currency=643&blocked[0]=account&blocked[1]=sum&blocked[2]=comment", entry.getKey());
             ArrayList<Long> payers = new ArrayList<Long>(newOrder.getMap().keySet());
             ArrayList<Long> usedPayers = new ArrayList<Long>();
-            int temp = 0;
             while (true) {
                 for (Long userId : payers) {
                     if (usedPayers.contains(userId)) {
@@ -119,19 +115,15 @@ public class OrderController {
                         tmp.getMap().replace(userId, Status.ACCEPTED);
                     }
                 }
-
                 if (usedPayers.size() == payers.size()) {
                     break;
                 }
-
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
                     System.out.println("got interrupted");
                 }
             }
-
-
         }
         return ResponseEntity
                 .created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri())
