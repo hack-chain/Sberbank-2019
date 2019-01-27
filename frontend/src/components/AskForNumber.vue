@@ -19,7 +19,7 @@ export default {
   methods: {
     send() {
       localStorage.setItem("phoneNumber", this.phoneNumber);
-      fetch("http://javathon.kolebor.ru:8080/users/phone/" + this.phoneNumber)
+      fetch("http://178.128.201.98/:8080/users/phone/" + this.phoneNumber)
         .then(response => {
           if (response.ok) {
             return response.json();
