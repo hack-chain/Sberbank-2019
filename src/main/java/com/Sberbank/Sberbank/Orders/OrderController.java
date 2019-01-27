@@ -56,6 +56,7 @@ public class OrderController {
         this.assembler = assembler;
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/orders")
     Resources<Resource<Order>> all() {
 
@@ -67,6 +68,7 @@ public class OrderController {
                 linkTo(methodOn(OrderController.class).all()).withSelfRel());
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/orders/{id}")
     Resource<Order> one(@PathVariable Long id) {
         return assembler.toResource(
@@ -74,6 +76,7 @@ public class OrderController {
                         .orElseThrow(() -> new OrderNotFoundException(id)));
     }
 
+    @CrossOrigin(origins = "*")
     @GetMapping("/orders/author/{author}")
     Resources<Resource<Order>> getByAuthor(@PathVariable Long author) {
         List<Resource<Order>> orders = findAll(author).stream()
@@ -91,6 +94,7 @@ public class OrderController {
                 new BeanPropertyRowMapper<Order>(Order.class));
     }
 
+    @CrossOrigin(origins = "*")
     @PostMapping("/orders")
     ResponseEntity<Resource<Order>> newOrder(@RequestBody Order order) {
 
