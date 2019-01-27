@@ -17,16 +17,16 @@ public class Order {
     private String description;
     private Integer cost;
     @Column(length = 100000)
-    private HashMap<Long, HashMap<String, Status>> map;
+    private HashMap<Long, Status> map;
 
     public Order() {
         this.author = Long.valueOf(1);
         this.description = "";
         this.cost = 0;
-        this.map = new HashMap<Long, HashMap<String, Status>> ();
+        this.map = new HashMap<Long, Status> ();
     }
 
-    public Order(Long author, String description, Integer cost, HashMap<Long, HashMap<String, Status>> map) {
+    public Order(Long author, String description, Integer cost, HashMap<Long, Status> map) {
         this.author = author;
         this.description = description;
         this.cost = cost;

@@ -22,14 +22,9 @@ class LoadDatabase {
     @Bean
     CommandLineRunner initDatabase(UserRepository repository, OrderRepository orderRepository) {
         return args -> {
-            HashMap<Long, HashMap<String, Status>> tmp = new HashMap<> ();
-
-            HashMap<String, Status>  pair1 = new HashMap<String, Status> ();
-            pair1.put("", Status.REJECTED);
-            HashMap<String, Status>  pair2 = new HashMap<String, Status> ();
-            pair2.put("", Status.ACCEPTED);
-            tmp.put(Long.valueOf(4), pair1);
-            tmp.put(Long.valueOf(3), pair2);
+            HashMap<Long, Status> tmp = new HashMap<> ();
+            tmp.put(Long.valueOf(4), Status.REJECTED);
+            tmp.put(Long.valueOf(3), Status.ACCEPTED);
             orderRepository.save(new Order(Long.valueOf(3),"pizza", 1000, tmp));
             orderRepository.save(new Order(Long.valueOf(3), "inet", 1000, tmp));
 

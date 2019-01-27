@@ -46,8 +46,6 @@ public class SMS {
         main("Перейдите по ссылке для подтверждения оплаты: host//users/buyAccept/"+ buyId +"/" + userId + "/" + hash, userId);
 
         Order tmp = findById(buyId);
-        HashMap<String, Status> pair = new HashMap<String, Status>();
-        pair.put(hash, Status.REJECTED);
-        tmp.getMap().put(userId, pair);
+        tmp.getMap().replace(userId, Status.ACCEPTED);
     }
 }

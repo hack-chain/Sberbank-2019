@@ -93,6 +93,33 @@ public class OrderController {
 
         Order newOrder = orderRepository.save(order);
 
+        ArrayList<Long> payers = new ArrayList<Long> (newOrder.getMap().keySet());
+        ArrayList<Long> usedPayers = new ArrayList<Long>();
+        int temp = 0;
+        while (true) {
+            for (Long userId : payers) {
+                if (usedPayers.contains(userId)) {
+                    continue;
+                }
+                System.out.println(userId);
+                if (QiwiPayer.checkPayment(newOrder.getCost()/newOrder.getMap().size(), "0", "79850937035", userId, newOrder.getId(), "1c9111a7bf73364806348fa580ddae8c")) {
+                    usedPayers.add(userId);
+                    Order tmp = findById(newOrder.getId());
+                    tmp.getMap().replace(userId, Status.ACCEPTED);
+                }
+            }
+
+            if(usedPayers.size() == payers.size()) {
+                break;
+            }
+
+            try {
+                TimeUnit.SECONDS.sleep(2);
+            } catch (InterruptedException e) {
+                System.out.println("got interrupted");
+            }
+        }
+
         return ResponseEntity
                 .created(linkTo(methodOn(OrderController.class).one(newOrder.getId())).toUri())
                 .body(assembler.toResource(newOrder));
