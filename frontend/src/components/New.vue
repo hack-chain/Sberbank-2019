@@ -13,7 +13,7 @@
         <h3 class="mt-4">Участники покупки:</h3>
         <b-form-checkbox class="mt-3" v-model="ownerPays">Включить меня</b-form-checkbox>
       </b-form>
-      <InitialCard v-if="ownerPays" :personalData="{status: 'ok'}"/>
+      <InitialCard v-if="ownerPays" :personalData="{phoneNumber: ownerNumber, status: 'ok'}"/>
       <InitialCard v-for="p of people" :personalData="p" :key="p.phoneNumber"/>
       <div class="text-center">
         <b-button class="mt-3" variant="outline-primary" @click="$refs.modal.show()">+</b-button>
@@ -52,8 +52,13 @@ export default {
     ownerPays: true,
     newPerson: {
       phoneNumber: "+7"
-    }
+    },
+    ownerNumber: null
   }),
+
+  created() {
+    this.ownerNumber = window.localStorage.getItem("phoneNumber");
+  },
 
   methods: {
     addPerson() {

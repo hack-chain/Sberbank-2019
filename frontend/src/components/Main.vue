@@ -13,36 +13,47 @@ export default {
   name: "Main",
   components: { PaymentCard },
   data: () => ({
-    payments: [
-      {
-        id: "123",
-        name: "Интернет",
-        sum: 40000,
-        authorPays: false,
-        people: [
-          {
-            id: "3",
-            paid: false,
-            remindDaily: true,
-            remindDate: null
-          },
+    payments: []
+  }),
+  created() {
+    var id = localStorage.getItem("id");
+    if (!id) {
+      window.location.href = "/number";
+    }
 
-          {
-            id: "4",
-            paid: true,
-            remindDaily: true,
-            remindDate: null
-          },
-
-          {
-            id: null,
-            phoneNumber: "+79774713293",
-            paid: true
-          }
-        ]
-      }
-    ]
-  })
+    fetch("http://localhost:8080/orders/author/" + id)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .then(data => {
+        var paymentList = data._embedded.orderList;
+        for (let p of paymentList) {
+          fetch("http://localhost:8080/orders/" + p.id)
+            .then(response => {
+              if (response.ok) {
+                return response.json();
+              }
+            })
+            .then(data => {
+              var payment = {};
+              payment.name = "Name name";
+              payment.cost = data.cost;
+              payment.people = [];
+              for (p in data.map) {
+                console.log(data.map[p]);
+                if (data.map[p] == "PAID") {
+                  payment.people.push({ id: p, paid: true });
+                } else if (data.map[p] == "NOT_PAID") {
+                  payment.people.push({ id: p, paid: false });
+                }
+              }
+              this.payments.push(payment);
+            });
+        }
+      });
+  }
 };
 </script>
 

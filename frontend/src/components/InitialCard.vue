@@ -14,32 +14,59 @@
         </div>
       </div>
     </b-card>
-
-    <b-modal
-      :id="'modal' + personalData.id"
-      ref="modal"
-      hide-footer
-      hide-header
-      class="text-center"
-    >
-      <h3 class="my-5">Напомнить о платеже?</h3>
-      <b-button class="mr-2" variant="outline-success" @click="$refs.modal.hide()">Напомнить</b-button>
-      <b-button variant="outline-secondary" @click="$refs.modal.hide()">Отмена</b-button>
-    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
-  name: "PersonalCard",
+  name: "InitalCard",
   props: {
     personalData: Object
   },
 
   data: () => ({
     avatar: null,
-    name: null
-  })
+    name: null,
+    id: null
+  }),
+
+  created() {
+    var vm = this;
+    fetch("http://localhost:8080/users/phone/" + vm.personalData.phoneNumber)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error();
+        }
+      })
+      .then(data => {
+        (vm.avatar = data.photoUrl), (vm.name = data.name), (vm.id = data.id);
+      })
+      .catch(error => {
+        var headers = new Headers();
+        headers.append("Content-type", "application/json");
+        fetch("http://localhost:8080/users", {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify({
+            name: null,
+            phoneNumber: vm.personalData.phoneNumber,
+            photoUrl: null
+          })
+        }).then(response =>
+          fetch(
+            "http://localhost:8080/users/phone/" + vm.personalData.phoneNumber
+          )
+            .then(result => {
+              return response.json();
+            })
+            .then(data => {
+              vm.id = data.id;
+            })
+        );
+      });
+  }
 };
 </script>
 

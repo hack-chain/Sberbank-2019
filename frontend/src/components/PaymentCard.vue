@@ -1,7 +1,7 @@
 <template>
   <b-card class="mt-5">
     <h3 class="mt-2">{{ paymentData.name }}</h3>
-    <h2>{{ paymentData.sum / 100 }} &#8381;</h2>
+    <h2>{{ paymentData.cost }} &#8381;</h2>
     <PersonalCard v-for="p of paymentData.people" :personalData="p" :key="p.id"/>
     <div class="progressBar bg-success" :style="{width: percentPaid + '%'}"></div>
   </b-card>

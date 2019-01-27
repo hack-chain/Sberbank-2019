@@ -17,7 +17,23 @@ export default {
     phoneNumber: null
   }),
   methods: {
-    send() {}
+    send() {
+      localStorage.setItem("phoneNumber", this.phoneNumber);
+      fetch("http://localhost:8080/users/phone/" + this.phoneNumber)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            window.location.href = "/auth";
+          }
+        })
+        .then(data => {
+          localStorage.setItem("id", data.id);
+          localStorage.setItem("avatar", data.photoUrl);
+          localStorage.setItem("name", data.name);
+          window.location.href = "/";
+        });
+    }
   }
 };
 </script>
